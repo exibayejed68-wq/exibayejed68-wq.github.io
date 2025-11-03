@@ -1,10 +1,12 @@
-import React from 'react';
+import React from "react";
+import YouTubePlayer from "./YouTubePlayer";
 
-export default function App() {
+function App() {
   return (
-    <div style={{ fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial', padding: 24 }}>
-      <h1>Welcome — React on GitHub Pages</h1>
-      <p>Edit <code>src/App.js</code> and push to deploy.</p>
+    <div className="App">
+      <YouTubePlayer />
     </div>
   );
 }
+
+export default App;
