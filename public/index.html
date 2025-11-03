@@ -1,12 +1,79 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>!!!!!React GitHub Pages Site</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lo-fi Music Player</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        text-align: center;
+        padding: 60px;
+        background: #1e1e1e;
+        color: #fff;
+      }
+      button {
+        background: #2ecc71;
+        border: none;
+        padding: 12px 28px;
+        font-size: 18px;
+        color: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      button.pause {
+        background: #e74c3c;
+      }
+    </style>
   </head>
   <body>
-    <script>alert(0)</script>
-    <div id="root"></div>
+    <h2>🎵 Lo-fi Music Player</h2>
+    <button id="playBtn">Play</button>
+
+    <!-- Hidden YouTube iframe -->
+    <div id="player"></div>
+
+    <script>
+      // Load YouTube IFrame API
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+
+      let player;
+      let isPlaying = false;
+
+      // YouTube API callback
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+          height: "0",
+          width: "0",
+          videoId: "jfKfPfyJRdk", // YouTube video ID
+          playerVars: {
+            autoplay: 0,
+            controls: 0,
+            modestbranding: 1,
+            loop: 1,
+            playlist: "jfKfPfyJRdk", // required for looping
+          },
+        });
+      }
+
+      const btn = document.getElementById("playBtn");
+      btn.addEventListener("click", () => {
+        if (!player) return;
+        if (isPlaying) {
+          player.pauseVideo();
+          btn.textContent = "Play";
+          btn.classList.remove("pause");
+          isPlaying = false;
+        } else {
+          player.playVideo();
+          btn.textContent = "Pause";
+          btn.classList.add("pause");
+          isPlaying = true;
+        }
+      });
+    </script>
   </body>
 </html>
