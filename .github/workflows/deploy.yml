@@ -12,11 +12,6 @@ on:
       - 'README.md'
       - 'LICENSE'
 
-  workflow_dispatch:
-
-env:
-  TZ: Asia/Shanghai
-
 
 permissions:
   contents: read
@@ -29,36 +24,18 @@ concurrency:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-
-    strategy:
-      matrix:
-        node-version: [20]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
+          
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Cache PNPM store
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.pnpm-store
-            node_modules
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
- 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
@@ -68,14 +45,12 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-  
 
       - name: Build blog project
         run: |
           echo ${{ github.workspace }}
           pnpm build
 
-      
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
