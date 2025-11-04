@@ -3,16 +3,7 @@ name: Deploy Pages
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
-  pull_request:
-    branches: [main]
-    paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
-
-
+    
 permissions:
   contents: read
   pages: write
